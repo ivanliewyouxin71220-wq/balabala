@@ -95,10 +95,20 @@ canvas{
 <body>
 
 <button onclick="randomTheme()">Random Theme</button>
+<canvas id="canvas"></canvas>
 
 <h1>The Webpage From Ivan</h1>
 
 <section>
+
+<div class="card">
+<h2>Interest</h2>
+<p>
+One of my main interests is listening to music and playing different online games. 
+I enjoy games such as Roblox, Genshin Impact and Honkai Star Rail 
+because they allow me to explore creative worlds and interesting storylines.
+</p>
+</div>
 
 <div class="card">
 <h2>Game Gallery</h2>
@@ -149,6 +159,61 @@ function nextSlide(){
 }
 
 setInterval(nextSlide,4000);
+
+// PARTICLES
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+
+class Particle{
+constructor(x,y){
+this.x=x;
+this.y=y;
+this.size=Math.random()*4+1;
+this.speedX=Math.random()*2-1;
+this.speedY=Math.random()*2-1;
+}
+update(){
+this.x+=this.speedX;
+this.y+=this.speedY;
+this.size-=0.02;
+}
+draw(){
+ctx.fillStyle="rgba(255,255,255,0.7)";
+ctx.beginPath();
+ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+ctx.fill();
+}
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach((p,i)=>{
+p.update();
+p.draw();
+if(p.size<=0.2){particles.splice(i,1);}
+});
+requestAnimationFrame(animate);
+}
+animate();
+
+for(let i=0;i<60;i++){
+particles.push(new Particle(Math.random()*canvas.width,Math.random()*canvas.height));
+}
+
+window.addEventListener("click",(e)=>{
+for(let i=0;i<25;i++){
+particles.push(new Particle(e.clientX,e.clientY));
+}
+});
+
+window.addEventListener("resize",()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+});
 
 </script>
 

@@ -59,7 +59,6 @@ canvas{
     z-index:0;
 }
 
-/* Image slider */
 .slider{
     position:relative;
     width:100%;
@@ -90,7 +89,6 @@ canvas{
     border-radius:8px;
     cursor:pointer;
 }
-
 </style>
 </head>
 
@@ -106,35 +104,8 @@ canvas{
 <div class="card">
 <h2>Interest</h2>
 <p>
-One of my main interests is listening to music and playing different online games. 
-I enjoy games such as Roblox, Genshin Impact and Honkai Star Rail 
-because they allow me to explore creative worlds and interesting storylines. 
-Besides gaming, I also like talking with my friends and family members. 
-Spending time with them helps me relax and build stronger relationships. 
-In my free time, I always try to balance entertainment and meaningful activities.
-</p>
-</div>
-
-<div class="card">
-<h2>Musics</h2>
-<p>
-I love folk music and Chinese pop songs because they give me different emotions. 
-Folk music is very relaxing and peaceful, especially when I feel tired or stressed. 
-On the other hand, pop songs can mix with another kind of song like jazz, hip pop, EDM and R&B. And the R&B style is the one that I like it the most!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-I often listen to music in the car while wearing headphones and I often singing in the bathroommmmm ^-^!
-Music helps me focus better on my studies and improves my mood throughout the day.
-</p>
-</div>
-
-<div class="card">
-<h2>School</h2>
-<p>
-In school, my favourite subjects are English and Physics. 
-I love English because it helps me communicate with others 
-and understand global information. Physics is interesting because it explains 
-how natural laws work in our daily life. However, sometimes the physics teacher 
-gives too much homework, which makes me feel tired. Even so, I know practice is 
-important for improving my knowledge and preparing for future challenges.
+One of my main interests is listening to music and playing different online games.
+I enjoy games such as Roblox, Genshin Impact and Honkai Star Rail.
 </p>
 </div>
 
@@ -154,15 +125,15 @@ important for improving my knowledge and preparing for future challenges.
 </section>
 
 <script>
-// RANDOM THEME
+
 function randomTheme(){
-    let color1 = "#" + Math.floor(Math.random()*16777215).toString(16);
-    let color2 = "#" + Math.floor(Math.random()*16777215).toString(16);
-    document.documentElement.style.setProperty('--main-color',color1);
-    document.documentElement.style.setProperty('--second-color',color2);
+    function randomColor(){
+        return "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0');
+    }
+    document.documentElement.style.setProperty('--main-color',randomColor());
+    document.documentElement.style.setProperty('--second-color',randomColor());
 }
 
-// IMAGE SLIDER
 const images=[
 ["e678ce3bbdc58d47c59cc2233f001272_6590599481852303558.png","Genshin Impact city scenery"],
 ["e9e7d0b2c4bb49a783c910c0b05c6184.png","Honkai Star Rail cutscene"],
@@ -170,7 +141,8 @@ const images=[
 ["d331d3189256277.65a8b8bbcde24.png","Honkai Star Rail characters"],
 ["E3ClS8eVIAAbAv1.jpg.jpeg","Genshin Impact characters"],
 ["am-i-the-only-one-that-thinks-doors-is-the-most-v0-4sanbolynvgd1.png","Roblox DOORS corridor"],
-["3fab4f60-4d1c-11f0-8c47-237c2e4015f5.jpg","Roblox Grow a Garden"]
+["3fab4f60-4d1c-11f0-8c47-237c2e4015f5.jpg","Roblox Grow a Garden"],
+["ff44557751a432906d5277b56a773be7.jpg","Genshin Impact character"]
 ];
 
 let index=0;
@@ -182,61 +154,8 @@ function nextSlide(){
     document.getElementById("caption").innerText=images[index][1];
 }
 
-// PARTICLES
-const canvas=document.getElementById("canvas");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+setInterval(nextSlide,4000);
 
-let particles=[];
-
-class Particle{
-constructor(x,y){
-this.x=x;
-this.y=y;
-this.size=Math.random()*4+1;
-this.speedX=Math.random()*2-1;
-this.speedY=Math.random()*2-1;
-}
-update(){
-this.x+=this.speedX;
-this.y+=this.speedY;
-}
-draw(){
-ctx.fillStyle="rgba(255,255,255,0.7)";
-ctx.beginPath();
-ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-ctx.fill();
-}
-}
-
-function animate(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-particles.forEach((p,i)=>{
-p.update();
-p.draw();
-if(p.size<=0.2){particles.splice(i,1);}
-});
-requestAnimationFrame(animate);
-}
-animate();
-
-// floating background particles
-for(let i=0;i<60;i++){
-particles.push(new Particle(Math.random()*canvas.width,Math.random()*canvas.height));
-}
-
-// click explosion
-window.addEventListener("click",(e)=>{
-for(let i=0;i<25;i++){
-particles.push(new Particle(e.clientX,e.clientY));
-}
-});
-
-window.addEventListener("resize",()=>{
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-});
 </script>
 
 </body>
